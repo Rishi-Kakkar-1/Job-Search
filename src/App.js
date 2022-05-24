@@ -1,6 +1,5 @@
 import "./styles.css";
 import React from "react";
-// import ReactDOM from "react-dom";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,8 +10,12 @@ export default class App extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     let company = this.company.value;
-    console.log(company);
     this.inputed.textContent = company;
+    fetch("./database.txt").then(function (response) {
+      response.text().then(function (text) {
+        document.getElementById("textfile").textContent = text;
+      });
+    });
   }
 
   render() {
@@ -28,6 +31,7 @@ export default class App extends React.Component {
           <input type="submit" onClick={this.onSubmit} value="Submit" />
         </form>
         <p ref={(c) => (this.inputed = c)} name="inputed" />
+        <p ref={(c) => (this.textfile = c)} id="textfile" />
       </div>
     );
   }
